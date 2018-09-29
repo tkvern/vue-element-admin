@@ -84,9 +84,9 @@ const AsyncRouterMap = {
     {
       id: 1,
       path: '/nested',
-      component: '',
+      // component: '',
       redirect: '/nested/menu1/menu1-1',
-      name: 'isEditorNested',
+      name: 'Nested',
       meta: {
         title: 'nested',
         icon: 'nested'
@@ -94,23 +94,11 @@ const AsyncRouterMap = {
       parent_id: 0
     },
     {
-      id: 2,
-      path: 'menu1',
-      component: '/src/views/nested/menu1/index',
-      redirect: '/nested/menu1/menu1-1',
-      name: 'Menu1 Editor',
-      meta: {
-        title: 'menu1',
-        icon: ''
-      },
-      parentId: 1
-    },
-    {
       id: 3,
       path: 'menu2',
-      component: '/src/views/nested/menu2/index',
+      // component: '/src/views/nested/menu2/index',
       redirect: '',
-      name: 'Menu2 Editor',
+      name: 'Menu2',
       meta: {
         title: 'menu2',
         icon: ''

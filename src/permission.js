@@ -101,10 +101,10 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.getters.permission_routerMaps.length !== 0) {
         let permissionRouterMaps = j2arr(store.getters.permission_routerMaps, 'name')
-        permissionRouterMaps = [...permissionRouterMaps, 'Dashboard', 'Page401', '401', '404']
+        permissionRouterMaps = [...permissionRouterMaps, 'Dashboard', 'Page401', 'Login', '401', '404']
         console.log(permissionRouterMaps)
         if (permissionRouterMaps.indexOf(to.name) < 0) {
-          console.log('没有权限')
+          // console.log('没有权限')
           next({ path: '/401', replace: true, query: { noGoBack: true }})
         }
       }
@@ -137,7 +137,7 @@ router.beforeEach((to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
       next()
     } else {
-      next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
+      next(`/login`) // 否则全部重定向到登录页
       NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
     }
   }
