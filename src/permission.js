@@ -4,6 +4,7 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 import { getToken } from '@/utils/auth' // getToken from cookie
+// import Layout from '@/views/layout/Layout'
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
@@ -14,9 +15,83 @@ function hasPermission(roles, permissionRoles) {
   return roles.some(role => permissionRoles.indexOf(role) >= 0)
 }
 
+function convert(rows) {
+  function exists(rows, parentId) {
+    for (let i = 0; i < rows.length; i++) {
+      if (rows[i].id === parentId) return true
+    }
+    return false
+  }
+
+  var nodes = []
+  // get the top level nodes
+  for (let i = 0; i < rows.length; i++) {
+    var row = rows[i]
+    if (!exists(rows, row.parentId)) {
+      const data = {
+        id: row.id,
+        path: row.path,
+        // component: row.component === '' ? Layout : () => import(row.component),
+        name: row.name,
+        meta: row.meta
+      }
+      if (row.redirect !== '') {
+        data.redirect = row.redirect
+      }
+      nodes.push(data)
+    }
+  }
+
+  var toDo = []
+  for (let i = 0; i < nodes.length; i++) {
+    toDo.push(nodes[i])
+  }
+  while (toDo.length) {
+    const node = toDo.shift()	// the parent node
+    // get the children nodes
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i]
+      if (row.parentId === node.id) {
+        const child = {
+          id: row.id,
+          path: row.path,
+          // component: row.component === '' ? Layout : () => import(row.component),
+          name: row.name,
+          meta: row.meta
+        }
+        if (row.redirect !== '') {
+          child.redirect = row.redirect
+        }
+        if (node.children) {
+          node.children.push(child)
+        } else {
+          node.children = [child]
+        }
+        toDo.push(child)
+      }
+    }
+  }
+  return nodes
+}
+
+function j2arr(obj, key) { // 数组相同属性的元素,属性合并成第一个数组元素
+  obj = obj || []
+  const ret = []
+  // console.log(obj)
+  obj.forEach(item => {
+    if (item.hasOwnProperty(key)) {
+      ret.push(item[key])
+    } else {
+      ret.push(undefined)
+    }
+  })
+  return ret
+}
+
 const whiteList = ['/login', '/auth-redirect']// no redirect whitelist
 
 router.beforeEach((to, from, next) => {
+  console.log(to)
   NProgress.start() // start progress bar
   if (getToken()) { // determine if there has token
     /* has token*/
@@ -24,10 +99,20 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
+      if (store.getters.permission_routerMaps.length !== 0) {
+        let permissionRouterMaps = j2arr(store.getters.permission_routerMaps, 'name')
+        permissionRouterMaps = [...permissionRouterMaps, 'Dashboard', 'Page401', '401', '404']
+        console.log(permissionRouterMaps)
+        if (permissionRouterMaps.indexOf(to.name) < 0) {
+          console.log('没有权限')
+          next({ path: '/401', replace: true, query: { noGoBack: true }})
+        }
+      }
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
-          const roles = res.data.roles // note: roles must be a array! such as: ['editor','develop']
-          store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
+          const { roles, routerMaps } = res.data // note: roles must be a array! such as: ['editor','develop']
+          const routerFix = convert(routerMaps)
+          store.dispatch('GenerateRoutes', { roles, routerMaps, routerFix }).then(() => { // 根据roles权限生成可访问的路由表
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
           })

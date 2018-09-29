@@ -20,7 +20,6 @@ function hasPermission(roles, route) {
  */
 function filterAsyncRouter(routes, roles) {
   const res = []
-
   routes.forEach(route => {
     const tmp = { ...route }
     if (hasPermission(roles, tmp)) {
@@ -37,25 +36,27 @@ function filterAsyncRouter(routes, roles) {
 const permission = {
   state: {
     routers: constantRouterMap,
-    addRouters: []
+    addRouters: [],
+    routerMaps: []
   },
   mutations: {
-    SET_ROUTERS: (state, routers) => {
+    SET_ROUTERS: (state, { routers, routerMaps, routerFix }) => {
       state.addRouters = routers
-      state.routers = constantRouterMap.concat(routers)
+      state.routerMaps = routerMaps
+      state.routers = constantRouterMap.concat(routerFix)
     }
   },
   actions: {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
-        const { roles } = data
+        const { roles, routerMaps, routerFix } = data
         let accessedRouters
         if (roles.includes('admin')) {
           accessedRouters = asyncRouterMap
         } else {
           accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
         }
-        commit('SET_ROUTERS', accessedRouters)
+        commit('SET_ROUTERS', { routers: accessedRouters, routerMaps, routerFix })
         resolve()
       })
     }

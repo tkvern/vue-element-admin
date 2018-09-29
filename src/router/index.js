@@ -40,27 +40,32 @@ export const constantRouterMap = [
         path: '/redirect/:path*',
         component: () => import('@/views/redirect/index')
       }
-    ]
+    ],
+    name: 'Redirect'
   },
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    hidden: true
+    hidden: true,
+    name: 'Login'
   },
   {
     path: '/auth-redirect',
     component: () => import('@/views/login/authredirect'),
-    hidden: true
+    hidden: true,
+    name: 'Auth-redirect'
   },
   {
     path: '/404',
     component: () => import('@/views/errorPage/404'),
-    hidden: true
+    hidden: true,
+    name: '404'
   },
   {
     path: '/401',
     component: () => import('@/views/errorPage/401'),
-    hidden: true
+    hidden: true,
+    name: '401'
   },
   {
     path: '',
