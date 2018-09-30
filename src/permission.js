@@ -8,29 +8,48 @@ import { getToken } from '@/utils/auth' // getToken from cookie
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
-// permission judge function
+/**
+ * permission judge function, 判断是否有权限,暂未使用
+ * @author Pan
+ * @param {Array} roles - 授权角色
+ * @param {String} permissionRoles - 当前角色
+ * @returns {Object} - 返回过滤后结果
+ */
 function hasPermission(roles, permissionRoles) {
   if (roles.indexOf('admin') >= 0) return true // admin permission passed directly
   if (!permissionRoles) return true
   return roles.some(role => permissionRoles.indexOf(role) >= 0)
 }
 
+/**
+ * 权限菜单结构过滤
+ * @author tkvern
+ * @param {Object} row - 单项权限菜单
+ * @returns {Object} - 返回过滤后结果
+ */
+function formatDateForRouter(row) {
+  return {
+    id: row.id,
+    path: row.path,
+    name: row.name,
+    meta: row.meta,
+    alwaysShow: row.alwaysShow || false,
+    hidden: row.hidden || false
+  }
+}
+
+/**
+ * 服务端权限菜单list转tree
+ * @author tkvern
+ * @param {Array} rows - 权限菜单数组.
+ * @returns {Array} - 返回菜单tree
+ */
 function convert(rows) {
   function exists(rows, parentId) {
     for (let i = 0; i < rows.length; i++) {
       if (rows[i].id === parentId) return true
     }
     return false
-  }
-  function formatDateForRouter(row) {
-    return {
-      id: row.id,
-      path: row.path,
-      name: row.name,
-      meta: row.meta,
-      alwaysShow: row.alwaysShow || false,
-      hidden: row.hidden || false
-    }
   }
 
   var nodes = []
@@ -72,10 +91,16 @@ function convert(rows) {
   return nodes
 }
 
-function j2arr(obj, key) { // 数组相同属性的元素,属性合并成第一个数组元素
+/**
+ * Object数组相同字段的元素,合并成一个数组
+ * @author tkvern
+ * @param {Array} obj - 权限菜单数组.
+ * @param {String} key - 需要合并的字段
+ * @returns {Array} - 返回菜单tree
+ */
+function j2arr(obj, key) {
   obj = obj || []
   const ret = []
-  // console.log(obj)
   obj.forEach(item => {
     if (item.hasOwnProperty(key)) {
       ret.push(item[key])
@@ -90,7 +115,6 @@ const whiteList = ['/login', '/auth-redirect']// no redirect whitelist
 const whiteRoute = ['Dashboard', 'Page401', 'Login', '401', '404']
 
 router.beforeEach((to, from, next) => {
-  console.log(to)
   NProgress.start() // start progress bar
   if (getToken()) { // determine if there has token
     /* has token*/

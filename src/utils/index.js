@@ -2,6 +2,14 @@
  * Created by jiachenpan on 16/11/18.
  */
 
+/**
+ * 转化时间
+ * @author Pan
+ * @exports utils/index/parseTime
+ * @param {Date} time
+ * @param {String} cFormat
+ * @returns {String}
+ */
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
@@ -35,6 +43,14 @@ export function parseTime(time, cFormat) {
   return time_str
 }
 
+/**
+ *  格式化时间，多少XX前
+ * @author Pan
+ * @exports utils/index/formatTime
+ * @param {Date} time
+ * @param {String} option
+ * @returns {String}
+ */
 export function formatTime(time, option) {
   time = +time * 1000
   const d = new Date(time)

@@ -1,6 +1,9 @@
 import store from '@/store'
 
 /**
+ * 检查权限
+ * @author Pan
+ * @exports utils/permission/checkPermission
  * @param {Array} value
  * @returns {Boolean}
  * @example see @/views/permission/directive.vue
