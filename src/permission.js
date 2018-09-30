@@ -22,18 +22,23 @@ function convert(rows) {
     }
     return false
   }
+  function formatDateForRouter(row) {
+    return {
+      id: row.id,
+      path: row.path,
+      name: row.name,
+      meta: row.meta,
+      alwaysShow: row.alwaysShow || false,
+      hidden: row.hidden || false
+    }
+  }
 
   var nodes = []
   // get the top level nodes
   for (let i = 0; i < rows.length; i++) {
     var row = rows[i]
     if (!exists(rows, row.parentId)) {
-      const data = {
-        id: row.id,
-        path: row.path,
-        name: row.name,
-        meta: row.meta
-      }
+      const data = formatDateForRouter(row)
       if (row.redirect !== '') {
         data.redirect = row.redirect
       }
@@ -51,12 +56,7 @@ function convert(rows) {
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i]
       if (row.parentId === node.id) {
-        const child = {
-          id: row.id,
-          path: row.path,
-          name: row.name,
-          meta: row.meta
-        }
+        const child = formatDateForRouter(row)
         if (row.redirect !== '') {
           child.redirect = row.redirect
         }
@@ -87,7 +87,7 @@ function j2arr(obj, key) { // 数组相同属性的元素,属性合并成第一�
 }
 
 const whiteList = ['/login', '/auth-redirect']// no redirect whitelist
-const whiteRoute = ['Dashboard', 'Page401', 'Login', 'Guide', '401', '404']
+const whiteRoute = ['Dashboard', 'Page401', 'Login', '401', '404']
 
 router.beforeEach((to, from, next) => {
   console.log(to)
@@ -103,6 +103,7 @@ router.beforeEach((to, from, next) => {
         permissionRouterMaps = [...permissionRouterMaps, ...whiteRoute]
         if (permissionRouterMaps.indexOf(to.name) < 0) {
           // 没有权限跳转401
+          // console.log('没有权限')
           next({ path: '/401', replace: true, query: { noGoBack: true }})
         }
       }

@@ -83,7 +83,8 @@ const AsyncRouterMap = {
         title: 'sysCharts',
         icon: 'chart'
       },
-      parent_id: 0
+      parent_id: 0,
+      alwaysShow: true
     },
     {
       id: 7,

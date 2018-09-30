@@ -5,8 +5,8 @@ import Layout from '@/views/layout/Layout'
 const superUserRouter = {
   path: '/superuser',
   component: Layout,
-  redirect: 'noredirect',
   name: 'SuperUser',
+  redirect: 'noredirect',
   meta: {
     title: 'superUser',
     icon: 'supervise'
@@ -14,7 +14,7 @@ const superUserRouter = {
   children: [
     {
       path: 'users',
-      component: () => import('@/views/superuser/users/list'),
+      component: () => import('@/views/superuser/users/index'),
       name: 'Users',
       meta: { title: 'users' }
     },
