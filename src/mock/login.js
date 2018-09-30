@@ -26,7 +26,7 @@ const AsyncRouterMap = {
       redirect: 'noredirect',
       meta: {
         title: 'superUser',
-        icon: 'nested'
+        icon: 'supervise'
       },
       parent_id: 0
     },
@@ -37,7 +37,7 @@ const AsyncRouterMap = {
       name: 'Users',
       meta: {
         title: 'users',
-        icon: ''
+        icon: 'example'
       },
       parentId: 1
     },
@@ -48,7 +48,7 @@ const AsyncRouterMap = {
       name: 'Roles',
       meta: {
         title: 'roles',
-        icon: ''
+        icon: 'example'
       },
       parentId: 1
     },
@@ -59,7 +59,7 @@ const AsyncRouterMap = {
       name: 'Menus',
       meta: {
         title: 'menus',
-        icon: ''
+        icon: 'example'
       },
       parentId: 1
     },
@@ -69,8 +69,8 @@ const AsyncRouterMap = {
       redirect: '',
       name: 'OperationLogs',
       meta: {
-        title: 'operationLogs',
-        icon: ''
+        title: '操作日志operation_Logs',
+        icon: 'example'
       },
       parentId: 1
     }

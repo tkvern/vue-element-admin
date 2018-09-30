@@ -87,6 +87,7 @@ function j2arr(obj, key) { // 数组相同属性的元素,属性合并成第一�
 }
 
 const whiteList = ['/login', '/auth-redirect']// no redirect whitelist
+const whiteRoute = ['Dashboard', 'Page401', 'Login', 'Guide', '401', '404']
 
 router.beforeEach((to, from, next) => {
   console.log(to)
@@ -99,10 +100,10 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.getters.permission_routerMaps.length !== 0) {
         let permissionRouterMaps = j2arr(store.getters.permission_routerMaps, 'name')
-        permissionRouterMaps = [...permissionRouterMaps, 'Dashboard', 'Page401', 'Login', '401', '404']
+        permissionRouterMaps = [...permissionRouterMaps, ...whiteRoute]
         if (permissionRouterMaps.indexOf(to.name) < 0) {
-          console.log('没有权限')
-          // next({ path: '/401', replace: true, query: { noGoBack: true }})
+          // 没有权限跳转401
+          next({ path: '/401', replace: true, query: { noGoBack: true }})
         }
       }
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
