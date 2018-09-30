@@ -78,8 +78,7 @@ const AsyncRouterMap = {
       id: 6,
       path: '/syscharts',
       name: 'Syscharts',
-      // redirect: 'noredirect',
-      alwaysShow: true,
+      redirect: 'noredirect',
       meta: {
         title: 'sysCharts',
         icon: 'chart'

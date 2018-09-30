@@ -5,7 +5,7 @@ import Layout from '@/views/layout/Layout'
 const superUserRouter = {
   path: '/syscharts',
   component: Layout,
-  // redirect: 'noredirect',
+  redirect: 'noredirect',
   name: 'SsysCharts',
   meta: {
     title: 'sysCharts',
