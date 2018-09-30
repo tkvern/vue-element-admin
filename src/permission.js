@@ -102,10 +102,9 @@ router.beforeEach((to, from, next) => {
       if (store.getters.permission_routerMaps.length !== 0) {
         let permissionRouterMaps = j2arr(store.getters.permission_routerMaps, 'name')
         permissionRouterMaps = [...permissionRouterMaps, 'Dashboard', 'Page401', 'Login', '401', '404']
-        console.log(permissionRouterMaps)
         if (permissionRouterMaps.indexOf(to.name) < 0) {
-          // console.log('没有权限')
-          next({ path: '/401', replace: true, query: { noGoBack: true }})
+          console.log('没有权限')
+          // next({ path: '/401', replace: true, query: { noGoBack: true }})
         }
       }
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息

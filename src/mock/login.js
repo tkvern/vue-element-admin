@@ -22,11 +22,11 @@ const AsyncRouterMap = {
     {
       id: 1,
       path: '/nested',
-      component: '',
+      // component: '',
       redirect: '/nested/menu1/menu1-1',
       name: 'Nested',
       meta: {
-        title: 'nested',
+        title: 'nesteds',
         icon: 'nested'
       },
       parent_id: 0
@@ -34,7 +34,7 @@ const AsyncRouterMap = {
     {
       id: 2,
       path: 'menu1',
-      component: './src/views/nested/menu1/index.vue',
+      // component: './src/views/nested/menu1/index.vue',
       redirect: '',
       name: 'Menu1',
       meta: {
@@ -46,7 +46,7 @@ const AsyncRouterMap = {
     {
       id: 3,
       path: 'menu2',
-      component: '/src/views/nested/menu2/index',
+      // component: '/src/views/nested/menu2/index',
       redirect: '',
       name: 'Menu2',
       meta: {
@@ -55,29 +55,41 @@ const AsyncRouterMap = {
       },
       parentId: 1
     },
+    // {
+    //   id: 4,
+    //   path: 'menu1-1',
+    //   // component: '/src/views/nested/menu1/menu1-1',
+    //   redirect: '',
+    //   name: 'Menu1-1',
+    //   meta: {
+    //     title: 'menu1-1',
+    //     icon: ''
+    //   },
+    //   parentId: 2
+    // },
+    // {
+    //   id: 5,
+    //   path: 'menu1-3',
+    //   // component: '/src/views/nested/menu1/menu1-3',
+    //   redirect: '',
+    //   name: 'Menu1-3',
+    //   meta: {
+    //     title: 'menu1-3',
+    //     icon: ''
+    //   },
+    //   parentId: 2
+    // },
     {
-      id: 4,
-      path: 'menu1-1',
-      component: '/src/views/nested/menu1/menu1-1',
-      redirect: '',
-      name: 'Menu1-1',
+      id: 6,
+      path: '/superuser',
+      // component: '',
+      // redirect: '/nested/menu1/menu1-1',
+      name: 'Superuser',
       meta: {
-        title: 'menu1-1',
-        icon: ''
+        title: 'superuser',
+        icon: 'nested'
       },
-      parentId: 2
-    },
-    {
-      id: 5,
-      path: 'menu1-3',
-      component: '/src/views/nested/menu1/menu1-3',
-      redirect: '',
-      name: 'Menu1-3',
-      meta: {
-        title: 'menu1-3',
-        icon: ''
-      },
-      parentId: 2
+      parent_id: 0
     }
   ],
   editor: [

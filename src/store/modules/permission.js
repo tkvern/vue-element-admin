@@ -43,7 +43,8 @@ const permission = {
     SET_ROUTERS: (state, { routers, routerMaps, routerFix }) => {
       state.addRouters = routers
       state.routerMaps = routerMaps
-      state.routers = constantRouterMap.concat(routerFix)
+      state.routers = constantRouterMap.concat(routers)
+      console.log(state.routers)
     }
   },
   actions: {
@@ -56,6 +57,7 @@ const permission = {
         } else {
           accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
         }
+        // console.log(routerFix)
         commit('SET_ROUTERS', { routers: accessedRouters, routerMaps, routerFix })
         resolve()
       })
