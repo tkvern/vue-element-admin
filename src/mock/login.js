@@ -69,10 +69,55 @@ const AsyncRouterMap = {
       redirect: '',
       name: 'OperationLogs',
       meta: {
-        title: '操作日志operation_Logs',
+        title: 'operationLogs',
         icon: 'example'
       },
       parentId: 1
+    },
+    {
+      id: 6,
+      path: '/syscharts',
+      name: 'Syscharts',
+      // redirect: 'noredirect',
+      alwaysShow: true,
+      meta: {
+        title: 'sysCharts',
+        icon: 'chart'
+      },
+      parent_id: 0
+    },
+    {
+      id: 7,
+      path: 'interface_charts',
+      redirect: '',
+      name: 'InterfaceCharts',
+      meta: {
+        title: 'interfaceCharts',
+        icon: 'example'
+      },
+      parentId: 6
+    },
+    {
+      id: 8,
+      path: 'parameter_charts',
+      redirect: '',
+      name: 'ParameterCharts',
+      meta: {
+        title: 'parameterCharts',
+        icon: 'example'
+      },
+      parentId: 6
+    },
+    {
+      id: 9,
+      path: 'user_charts',
+      redirect: '',
+      name: 'UserCharts',
+      meta: {
+        title: 'userCharts',
+        icon: 'example'
+      },
+      parentId: 6
     }
   ],
   editor: [

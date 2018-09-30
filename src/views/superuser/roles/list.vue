@@ -69,7 +69,7 @@
 import { fetchList } from '@/api/article'
 
 export default {
-  name: 'ArticleList',
+  name: 'RolesList',
   filters: {
     statusFilter(status) {
       const statusMap = {
