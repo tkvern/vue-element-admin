@@ -31,7 +31,6 @@ function convert(rows) {
       const data = {
         id: row.id,
         path: row.path,
-        // component: row.component === '' ? Layout : () => import(row.component),
         name: row.name,
         meta: row.meta
       }
@@ -55,7 +54,6 @@ function convert(rows) {
         const child = {
           id: row.id,
           path: row.path,
-          // component: row.component === '' ? Layout : () => import(row.component),
           name: row.name,
           meta: row.meta
         }

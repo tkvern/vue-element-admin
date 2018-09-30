@@ -8,7 +8,7 @@ const superUserRouter = {
   redirect: 'noredirect',
   name: 'SuperUser',
   meta: {
-    title: '超级管理',
+    title: 'superUser',
     icon: 'supervise'
   },
   children: [
@@ -16,13 +16,25 @@ const superUserRouter = {
       path: 'users',
       component: () => import('@/views/superuser/users/list'),
       name: 'Users',
-      meta: { title: '用户管理' }
+      meta: { title: 'users' }
     },
     {
       path: 'roles',
       component: () => import('@/views/superuser/roles/list'),
       name: 'Roles',
-      meta: { title: '角色权限' }
+      meta: { title: 'roles' }
+    },
+    {
+      path: 'menus',
+      component: () => import('@/views/superuser/menus/list'),
+      name: 'Menus',
+      meta: { title: 'menus' }
+    },
+    {
+      path: 'operation_logs',
+      component: () => import('@/views/superuser/OperationLogs/list'),
+      name: 'OperationLogs',
+      meta: { title: 'operationLogs' }
     }
   ]
 }

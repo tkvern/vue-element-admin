@@ -21,75 +21,58 @@ const AsyncRouterMap = {
   admin: [
     {
       id: 1,
-      path: '/nested',
-      // component: '',
-      redirect: '/nested/menu1/menu1-1',
-      name: 'Nested',
+      path: '/superuser',
+      name: 'SuperUser',
+      redirect: 'noredirect',
       meta: {
-        title: 'nesteds',
+        title: 'superUser',
         icon: 'nested'
       },
       parent_id: 0
     },
     {
       id: 2,
-      path: 'menu1',
-      // component: './src/views/nested/menu1/index.vue',
+      path: 'users',
       redirect: '',
-      name: 'Menu1',
+      name: 'Users',
       meta: {
-        title: 'menu1',
+        title: 'users',
         icon: ''
       },
       parentId: 1
     },
     {
       id: 3,
-      path: 'menu2',
-      // component: '/src/views/nested/menu2/index',
+      path: 'roles',
       redirect: '',
-      name: 'Menu2',
+      name: 'Roles',
       meta: {
-        title: 'menu2',
+        title: 'roles',
         icon: ''
       },
       parentId: 1
     },
-    // {
-    //   id: 4,
-    //   path: 'menu1-1',
-    //   // component: '/src/views/nested/menu1/menu1-1',
-    //   redirect: '',
-    //   name: 'Menu1-1',
-    //   meta: {
-    //     title: 'menu1-1',
-    //     icon: ''
-    //   },
-    //   parentId: 2
-    // },
-    // {
-    //   id: 5,
-    //   path: 'menu1-3',
-    //   // component: '/src/views/nested/menu1/menu1-3',
-    //   redirect: '',
-    //   name: 'Menu1-3',
-    //   meta: {
-    //     title: 'menu1-3',
-    //     icon: ''
-    //   },
-    //   parentId: 2
-    // },
     {
-      id: 6,
-      path: '/superuser',
-      // component: '',
-      // redirect: '/nested/menu1/menu1-1',
-      name: 'Superuser',
+      id: 4,
+      path: 'menus',
+      redirect: '',
+      name: 'Menus',
       meta: {
-        title: 'superuser',
-        icon: 'nested'
+        title: 'menus',
+        icon: ''
       },
-      parent_id: 0
+      parentId: 1
+    },
+    {
+      id: 5,
+      path: 'operation_logs',
+      redirect: '',
+      name: 'OperationLogs',
+      meta: {
+        title: 'operationLogs',
+        icon: ''
+      },
+      parentId: 1
     }
   ],
   editor: [

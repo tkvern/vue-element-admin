@@ -43,7 +43,7 @@ const permission = {
     SET_ROUTERS: (state, { routers, routerMaps, routerFix }) => {
       state.addRouters = routers
       state.routerMaps = routerMaps
-      state.routers = constantRouterMap.concat(routers)
+      state.routers = constantRouterMap.concat(routerFix)
       console.log(state.routers)
     }
   },

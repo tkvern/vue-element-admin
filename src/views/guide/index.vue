@@ -22,7 +22,12 @@ export default {
     }
   },
   mounted() {
-    this.driver = new Driver()
+    this.driver = new Driver({
+      nextBtnText: '下一步',
+      prevBtnText: '上一步',
+      doneBtnText: '完成',
+      closeBtnText: '关闭'
+    })
   },
   methods: {
     guide() {
