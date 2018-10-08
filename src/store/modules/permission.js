@@ -43,15 +43,19 @@ const permission = {
     SET_ROUTERS: (state, { routers, routerMaps, routerFix }) => {
       state.addRouters = routers
       state.routerMaps = routerMaps
-      console.log(routerFix)
       state.routers = constantRouterMap.concat(routerFix)
     }
   },
   actions: {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
-        const { roles, routerMaps, routerFix } = data
+        const { roles, routerMaps } = data
+        let { routerFix } = data
         let accessedRouters
+        if (process.env.DEBUGGER) {
+          console.log('Debugger Is Open, load All Menu')
+          routerFix = asyncRouterMap
+        }
         if (roles.includes('admin')) {
           accessedRouters = asyncRouterMap
         } else {

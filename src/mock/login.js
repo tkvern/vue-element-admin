@@ -73,52 +73,52 @@ const AsyncRouterMap = {
         icon: 'example'
       },
       parentId: 1
-    },
-    {
-      id: 6,
-      path: '/syscharts',
-      name: 'Syscharts',
-      redirect: 'noredirect',
-      meta: {
-        title: 'sysCharts',
-        icon: 'chart'
-      },
-      parent_id: 0,
-      alwaysShow: true
-    },
-    {
-      id: 7,
-      path: 'interface_charts',
-      redirect: '',
-      name: 'InterfaceCharts',
-      meta: {
-        title: 'interfaceCharts',
-        icon: 'example'
-      },
-      parentId: 6
-    },
-    {
-      id: 8,
-      path: 'parameter_charts',
-      redirect: '',
-      name: 'ParameterCharts',
-      meta: {
-        title: 'parameterCharts',
-        icon: 'example'
-      },
-      parentId: 6
-    },
-    {
-      id: 9,
-      path: 'user_charts',
-      redirect: '',
-      name: 'UserCharts',
-      meta: {
-        title: 'userCharts',
-        icon: 'example'
-      },
-      parentId: 6
     }
+    // {
+    //   id: 6,
+    //   path: '/syscharts',
+    //   name: 'Syscharts',
+    //   redirect: 'noredirect',
+    //   meta: {
+    //     title: 'sysCharts',
+    //     icon: 'chart'
+    //   },
+    //   parent_id: 0,
+    //   alwaysShow: true
+    // },
+    // {
+    //   id: 7,
+    //   path: 'interface_charts',
+    //   redirect: '',
+    //   name: 'InterfaceCharts',
+    //   meta: {
+    //     title: 'interfaceCharts',
+    //     icon: 'example'
+    //   },
+    //   parentId: 6
+    // },
+    // {
+    //   id: 8,
+    //   path: 'parameter_charts',
+    //   redirect: '',
+    //   name: 'ParameterCharts',
+    //   meta: {
+    //     title: 'parameterCharts',
+    //     icon: 'example'
+    //   },
+    //   parentId: 6
+    // },
+    // {
+    //   id: 9,
+    //   path: 'user_charts',
+    //   redirect: '',
+    //   name: 'UserCharts',
+    //   meta: {
+    //     title: 'userCharts',
+    //     icon: 'example'
+    //   },
+    //   parentId: 6
+    // }
   ],
   editor: [
     {
