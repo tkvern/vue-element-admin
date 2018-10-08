@@ -105,7 +105,7 @@ function j2arr(obj, key) {
     if (item.hasOwnProperty(key)) {
       ret.push(item[key])
     } else {
-      ret.push(undefined)
+      ret.push(item)
     }
   })
   return ret
@@ -122,19 +122,27 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
+      console.log(store.getters.permission_routerMaps)
       if (store.getters.permission_routerMaps.length !== 0) {
-        let permissionRouterMaps = j2arr(store.getters.permission_routerMaps, 'name')
-        permissionRouterMaps = [...permissionRouterMaps, ...whiteRoute]
+        const permissionRouterMaps = j2arr(store.getters.permission_routerMaps, 'name')
+        // permissionRouterMaps = [...permissionRouterMaps, ...whiteRoute]
+        // console.log(permissionRouterMaps)
         if (permissionRouterMaps.indexOf(to.name) < 0) {
           // 没有权限跳转401
           // console.log('没有权限')
-          next({ path: '/401', replace: true, query: { noGoBack: true }})
+          if (process.env.DEBUGGER) {
+            console.log('没有权限, 调试模式可以访问')
+          } else {
+            next({ path: '/401', replace: true, query: { noGoBack: true }})
+          }
         }
       }
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
-          const { roles, routerMaps } = res.data // note: roles must be a array! such as: ['editor','develop']
+          const { roles } = res.data // note: roles must be a array! such as: ['editor','develop']
+          let { routerMaps } = res.data
           const routerFix = convert(routerMaps)
+          routerMaps = whiteRoute.concat(routerMaps)
           store.dispatch('GenerateRoutes', { roles, routerMaps, routerFix }).then(() => { // 根据roles权限生成可访问的路由表
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record

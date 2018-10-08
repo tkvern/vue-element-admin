@@ -19,61 +19,61 @@ const userMap = {
 
 const AsyncRouterMap = {
   admin: [
-    {
-      id: 1,
-      path: '/superuser',
-      name: 'SuperUser',
-      redirect: 'noredirect',
-      meta: {
-        title: 'superUser',
-        icon: 'supervise'
-      },
-      parent_id: 0
-    },
-    {
-      id: 2,
-      path: 'users',
-      redirect: '',
-      name: 'Users',
-      meta: {
-        title: 'users',
-        icon: 'example'
-      },
-      parentId: 1
-    },
-    {
-      id: 3,
-      path: 'roles',
-      redirect: '',
-      name: 'Roles',
-      meta: {
-        title: 'roles',
-        icon: 'example'
-      },
-      parentId: 1
-    },
-    {
-      id: 4,
-      path: 'menus',
-      redirect: '',
-      name: 'Menus',
-      meta: {
-        title: 'menus',
-        icon: 'example'
-      },
-      parentId: 1
-    },
-    {
-      id: 5,
-      path: 'operation_logs',
-      redirect: '',
-      name: 'OperationLogs',
-      meta: {
-        title: 'operationLogs',
-        icon: 'example'
-      },
-      parentId: 1
-    }
+    // {
+    //   id: 1,
+    //   path: '/superuser',
+    //   name: 'SuperUser',
+    //   redirect: 'noredirect',
+    //   meta: {
+    //     title: 'superUser',
+    //     icon: 'supervise'
+    //   },
+    //   parent_id: 0
+    // },
+    // {
+    //   id: 2,
+    //   path: 'users',
+    //   redirect: '',
+    //   name: 'Users',
+    //   meta: {
+    //     title: 'users',
+    //     icon: 'example'
+    //   },
+    //   parentId: 1
+    // },
+    // {
+    //   id: 3,
+    //   path: 'roles',
+    //   redirect: '',
+    //   name: 'Roles',
+    //   meta: {
+    //     title: 'roles',
+    //     icon: 'example'
+    //   },
+    //   parentId: 1
+    // },
+    // {
+    //   id: 4,
+    //   path: 'menus',
+    //   redirect: '',
+    //   name: 'Menus',
+    //   meta: {
+    //     title: 'menus',
+    //     icon: 'example'
+    //   },
+    //   parentId: 1
+    // },
+    // {
+    //   id: 5,
+    //   path: 'operation_logs',
+    //   redirect: '',
+    //   name: 'OperationLogs',
+    //   meta: {
+    //     title: 'operationLogs',
+    //     icon: 'example'
+    //   },
+    //   parentId: 1
+    // },
     // {
     //   id: 6,
     //   path: '/syscharts',
