@@ -122,14 +122,12 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
-      console.log(store.getters.permission_routerMaps)
       if (store.getters.permission_routerMaps.length !== 0) {
         const permissionRouterMaps = j2arr(store.getters.permission_routerMaps, 'name')
         // permissionRouterMaps = [...permissionRouterMaps, ...whiteRoute]
         // console.log(permissionRouterMaps)
         if (permissionRouterMaps.indexOf(to.name) < 0) {
           // 没有权限跳转401
-          // console.log('没有权限')
           if (process.env.DEBUGGER) {
             console.log('没有权限, 调试模式可以访问')
           } else {

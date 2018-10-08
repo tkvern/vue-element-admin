@@ -1,4 +1,4 @@
-import { param2Obj } from '@/utils'
+// import { param2Obj } from '@/utils'
 
 const userMap = {
   admin: {
@@ -19,61 +19,61 @@ const userMap = {
 
 const AsyncRouterMap = {
   admin: [
-    // {
-    //   id: 1,
-    //   path: '/superuser',
-    //   name: 'SuperUser',
-    //   redirect: 'noredirect',
-    //   meta: {
-    //     title: 'superUser',
-    //     icon: 'supervise'
-    //   },
-    //   parent_id: 0
-    // },
-    // {
-    //   id: 2,
-    //   path: 'users',
-    //   redirect: '',
-    //   name: 'Users',
-    //   meta: {
-    //     title: 'users',
-    //     icon: 'example'
-    //   },
-    //   parentId: 1
-    // },
-    // {
-    //   id: 3,
-    //   path: 'roles',
-    //   redirect: '',
-    //   name: 'Roles',
-    //   meta: {
-    //     title: 'roles',
-    //     icon: 'example'
-    //   },
-    //   parentId: 1
-    // },
-    // {
-    //   id: 4,
-    //   path: 'menus',
-    //   redirect: '',
-    //   name: 'Menus',
-    //   meta: {
-    //     title: 'menus',
-    //     icon: 'example'
-    //   },
-    //   parentId: 1
-    // },
-    // {
-    //   id: 5,
-    //   path: 'operation_logs',
-    //   redirect: '',
-    //   name: 'OperationLogs',
-    //   meta: {
-    //     title: 'operationLogs',
-    //     icon: 'example'
-    //   },
-    //   parentId: 1
-    // },
+    {
+      id: 1,
+      path: '/superuser',
+      name: 'SuperUser',
+      redirect: 'noredirect',
+      meta: {
+        title: 'superUser',
+        icon: 'supervise'
+      },
+      parent_id: 0
+    },
+    {
+      id: 2,
+      path: 'users',
+      redirect: '',
+      name: 'Users',
+      meta: {
+        title: 'users',
+        icon: 'example'
+      },
+      parentId: 1
+    },
+    {
+      id: 3,
+      path: 'roles',
+      redirect: '',
+      name: 'Roles',
+      meta: {
+        title: 'roles',
+        icon: 'example'
+      },
+      parentId: 1
+    },
+    {
+      id: 4,
+      path: 'menus',
+      redirect: '',
+      name: 'Menus',
+      meta: {
+        title: 'menus',
+        icon: 'example'
+      },
+      parentId: 1
+    },
+    {
+      id: 5,
+      path: 'operation_logs',
+      redirect: '',
+      name: 'OperationLogs',
+      meta: {
+        title: 'operationLogs',
+        icon: 'example'
+      },
+      parentId: 1
+    }
     // {
     //   id: 6,
     //   path: '/syscharts',
@@ -155,17 +155,19 @@ export default {
     return {
       code: 200,
       'msg': '登录成功',
-      data: userMap[username]
+      data: userMap[username],
+      t: new Date().getTime()
     }
   },
   getUserInfo: config => {
-    const { id } = param2Obj(config.url)
-    if (userMap[id]) {
-      const r = { ...userMap[id], routerMaps: AsyncRouterMap[id] }
+    // const { id } = param2Obj(config.url)
+    if (userMap['admin']) {
+      const r = { ...userMap['admin'], routerMaps: AsyncRouterMap['admin'] }
       return {
         code: 200,
         'msg': '获取成功',
-        data: r
+        data: r,
+        t: new Date().getTime()
       }
     } else {
       return false

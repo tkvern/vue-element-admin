@@ -15,7 +15,7 @@ export function loginByUsername(username, password) {
     pwd: password
   }
   return request({
-    url: '/admin/login',
+    url: '/user/login',
     method: 'post',
     data
   })
@@ -40,11 +40,10 @@ export function logout() {
  * @exports api/login/getUserInfo
  * @returns {Promise} - 返回request对象
  */
-export function getUserInfo(id) {
+export function getUserInfo() {
   return request({
-    url: '/admin/info',
-    method: 'get',
-    params: { id }
+    url: '/user/info',
+    method: 'get'
   })
 }
 
