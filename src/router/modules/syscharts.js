@@ -6,7 +6,7 @@ const superUserRouter = {
   path: '/syscharts',
   component: Layout,
   redirect: 'noredirect',
-  name: 'SsysCharts',
+  name: 'SysCharts',
   meta: {
     title: 'sysCharts',
     icon: 'supervise'

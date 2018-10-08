@@ -11,6 +11,7 @@ const user = {
     avatar: '',
     introduction: '',
     roles: [],
+    isLogin: false,
     setting: {
       articlePlatform: []
     }
@@ -43,6 +44,9 @@ const user = {
     },
     SET_USER: (state, user) => {
       state.user = user
+    },
+    SET_ISLOGIN: (state, isLogin) => {
+      state.isLogin = isLogin
     }
   },
 
@@ -71,13 +75,12 @@ const user = {
             reject('error')
           }
           const data = response.data
-
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
-          } else {
-            reject('getInfo: roles must be a non-null array !')
-          }
-
+          // if (data.role && data.role.length > 0) { // 验证返回的roles是否是一个非空数组
+          //   commit('SET_ROLES', data.role)
+          // } else {
+          //   reject('getInfo: roles must be a non-null array !')
+          // }
+          commit('SET_ISLOGIN', true)
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
           commit('SET_INTRODUCTION', data.introduction)
