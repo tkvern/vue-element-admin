@@ -150,14 +150,23 @@ const AsyncRouterMap = {
 
 export default {
   loginByUsername: config => {
-    const { username } = JSON.parse(config.body)
-    return userMap[username]
+    const { account } = JSON.parse(config.body)
+    const username = account
+    return {
+      code: 200,
+      'msg': '登录成功',
+      data: userMap[username]
+    }
   },
   getUserInfo: config => {
     const { id } = param2Obj(config.url)
     if (userMap[id]) {
       const r = { ...userMap[id], routerMaps: AsyncRouterMap[id] }
-      return r
+      return {
+        code: 200,
+        'msg': '获取成功',
+        data: r
+      }
     } else {
       return false
     }

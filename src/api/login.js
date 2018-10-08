@@ -10,9 +10,9 @@ import request from '@/utils/request'
  */
 export function loginByUsername(username, password) {
   const data = {
-    // account: username,
-    username,
-    password
+    account: username,
+    // username,
+    pwd: password
   }
   return request({
     url: '/admin/login',
