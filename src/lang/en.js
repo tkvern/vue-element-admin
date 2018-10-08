@@ -107,6 +107,7 @@ export default {
     dynamicTips2: 'Not fixed header, sorted by click order',
     dragTips1: 'The default order',
     dragTips2: 'The after dragging order',
+    name: 'Name',
     title: 'Title',
     importance: 'Imp',
     type: 'Type',

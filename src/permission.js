@@ -94,9 +94,9 @@ function convert(rows) {
 /**
  * Object数组相同字段的元素,合并成一个数组
  * @author tkvern
- * @param {Array} obj - 权限菜单数组.
+ * @param {Array} obj - 数组.
  * @param {String} key - 需要合并的字段
- * @returns {Array} - 返回菜单tree
+ * @returns {Array} - 返回合并后数组
  */
 function j2arr(obj, key) {
   obj = obj || []

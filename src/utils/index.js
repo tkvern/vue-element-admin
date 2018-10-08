@@ -312,3 +312,23 @@ export function deepClone(source) {
 export function uniqueArr(arr) {
   return Array.from(new Set(arr))
 }
+
+/**
+ * Object数组相同字段的元素,合并成一个数组
+ * @author tkvern
+ * @param {Array} obj - 数组.
+ * @param {String} key - 需要合并的字段
+ * @returns {Array} - 返回合并后数组
+ */
+export function j2arr(obj, key) {
+  obj = obj || []
+  const ret = []
+  obj.forEach(item => {
+    if (item.hasOwnProperty(key)) {
+      ret.push(item[key])
+    } else {
+      ret.push(item)
+    }
+  })
+  return ret
+}
