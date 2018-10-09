@@ -1,8 +1,14 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input :placeholder="$t('table.name')" v-model="listQuery.name" style="width: 200px;" class="filter-item"/>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search">{{ $t('table.search') }}</el-button>
+      <el-input
+        :placeholder="$t('table.name')"
+        v-model="listQuery.name"
+        style="width: 200px;"
+        class="filter-item"
+        @keyup.enter.native="getList"
+      />
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="getList">{{ $t('table.search') }}</el-button>
       <el-button v-waves class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
     </div>
 
@@ -103,7 +109,8 @@ export default {
       listLoading: false,
       listQuery: {
         page: 1,
-        page_size: 10
+        page_size: 10,
+        name: null
       },
       dialogFormVisible: false,
       textMap: {
@@ -147,6 +154,7 @@ export default {
       this.getList()
     },
     handleCurrentChange(val) {
+      console.log(val)
       this.listQuery.page = val
       this.getList()
     },
