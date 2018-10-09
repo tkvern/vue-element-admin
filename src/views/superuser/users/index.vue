@@ -75,7 +75,7 @@ import { fetchList } from '@/api/article'
 import PanThumb from '@/components/PanThumb'
 
 export default {
-  name: 'UsersList',
+  name: 'UsersIndex',
   components: { PanThumb },
   filters: {
     statusFilter(status) {

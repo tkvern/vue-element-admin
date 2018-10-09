@@ -6,9 +6,9 @@
         v-model="listQuery.name"
         style="width: 200px;"
         class="filter-item"
-        @keyup.enter.native="getList"
+        @keyup.enter.native="fuzzySearch"
       />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="getList">{{ $t('table.search') }}</el-button>
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="fuzzySearch">{{ $t('table.search') }}</el-button>
       <el-button v-waves class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
     </div>
 
@@ -87,19 +87,9 @@ import waves from '@/directive/waves' // 水波纹指令
 import { j2arr } from '@/utils/index'
 
 export default {
-  name: 'RolesList',
+  name: 'RolesIndex',
   directives: {
     waves
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
   },
   data() {
     return {
@@ -143,6 +133,10 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
+    },
+    fuzzySearch() {
+      this.listQuery.page = 1
+      this.getList()
     },
     getPermissionList() {
       permissionIndex().then(response => {

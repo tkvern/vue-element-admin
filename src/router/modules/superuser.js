@@ -15,25 +15,25 @@ const superUserRouter = {
     {
       path: 'users',
       component: () => import('@/views/superuser/users/index'),
-      name: 'Users',
+      name: 'UsersIndex',
       meta: { title: 'users' }
     },
     {
       path: 'roles',
-      component: () => import('@/views/superuser/roles/list'),
-      name: 'Roles',
+      component: () => import('@/views/superuser/roles/index'),
+      name: 'RolesIndex',
       meta: { title: 'roles' }
     },
     {
       path: 'menus',
-      component: () => import('@/views/superuser/menus/list'),
-      name: 'Menus',
+      component: () => import('@/views/superuser/menus/index'),
+      name: 'MenusIndex',
       meta: { title: 'menus' }
     },
     {
       path: 'operation_logs',
-      component: () => import('@/views/superuser/OperationLogs/list'),
-      name: 'OperationLogs',
+      component: () => import('@/views/superuser/operationLogs/index'),
+      name: 'OperationLogsIndex',
       meta: { title: 'operationLogs' }
     }
   ]

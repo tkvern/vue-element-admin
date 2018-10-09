@@ -69,7 +69,7 @@
 import { fetchList } from '@/api/article'
 
 export default {
-  name: 'OperationLogsList',
+  name: 'MenusIndex',
   filters: {
     statusFilter(status) {
       const statusMap = {
