@@ -148,7 +148,6 @@ export default {
       this.getList()
     },
     handleCurrentChange(val) {
-      console.log(val)
       this.listQuery.page = val
       this.getList()
     },

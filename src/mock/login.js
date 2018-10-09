@@ -52,18 +52,17 @@ const AsyncRouterMap = {
       id: 1,
       path: '/superuser',
       name: 'SuperUser',
-      redirect: 'noredirect',
       meta: {
         title: 'superUser',
         icon: 'supervise'
       },
+      alwaysShow: true,
       parent_id: 0
     },
     {
       id: 2,
-      path: 'users',
-      redirect: '',
-      name: 'Users',
+      path: '/superuser/users',
+      name: 'UsersIndex',
       meta: {
         title: 'users',
         icon: 'example'
@@ -72,9 +71,8 @@ const AsyncRouterMap = {
     },
     {
       id: 3,
-      path: 'roles',
-      redirect: '',
-      name: 'Roles',
+      path: '/superuser/roles',
+      name: 'RolesIndex',
       meta: {
         title: 'roles',
         icon: 'example'
@@ -83,26 +81,35 @@ const AsyncRouterMap = {
     },
     {
       id: 4,
-      path: 'menus',
-      redirect: '',
-      name: 'Menus',
+      path: '/superuser/menus',
+      name: 'MenusIndex',
       meta: {
         title: 'menus',
         icon: 'example'
       },
       parentId: 1
-    },
-    {
-      id: 5,
-      path: 'operation_logs',
-      redirect: '',
-      name: 'OperationLogs',
-      meta: {
-        title: 'operationLogs',
-        icon: 'example'
-      },
-      parentId: 1
     }
+    // {
+    //   id: 5,
+    //   path: 'menuss',
+    //   name: 'MenussIndex',
+    //   meta: {
+    //     title: 'menuss',
+    //     icon: 'example'
+    //   },
+    //   parentId: 1
+    // }
+    // {
+    //   id: 5,
+    //   path: 'operation_logs',
+    //   redirect: '',
+    //   name: 'OperationLogs',
+    //   meta: {
+    //     title: 'operationLogs',
+    //     icon: 'example'
+    //   },
+    //   parentId: 1
+    // },
     // {
     //   id: 6,
     //   path: '/syscharts',
@@ -153,7 +160,6 @@ const AsyncRouterMap = {
     {
       id: 1,
       path: '/nested',
-      // component: '',
       redirect: '/nested/menu1/menu1-1',
       name: 'Nested',
       meta: {
@@ -165,7 +171,6 @@ const AsyncRouterMap = {
     {
       id: 3,
       path: 'menu2',
-      // component: '/src/views/nested/menu2/index',
       redirect: '',
       name: 'Menu2',
       meta: {

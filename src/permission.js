@@ -42,9 +42,10 @@ function formatDateForRouter(row) {
  * 服务端权限菜单list转tree
  * @author tkvern
  * @param {Array} rows - 权限菜单数组.
+ * @param {function} strucFun - 需要过滤的结构方法,传递单个元素后返回object即可.
  * @returns {Array} - 返回菜单tree
  */
-function convert(rows) {
+function convert(rows, strucFun) {
   function exists(rows, parentId) {
     for (let i = 0; i < rows.length; i++) {
       if (rows[i].id === parentId) return true
@@ -57,10 +58,7 @@ function convert(rows) {
   for (let i = 0; i < rows.length; i++) {
     var row = rows[i]
     if (!exists(rows, row.parentId)) {
-      const data = formatDateForRouter(row)
-      if (row.redirect !== '') {
-        data.redirect = row.redirect
-      }
+      const data = typeof strucFun === 'function' ? formatDateForRouter(row) : row
       nodes.push(data)
     }
   }
@@ -75,10 +73,7 @@ function convert(rows) {
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i]
       if (row.parentId === node.id) {
-        const child = formatDateForRouter(row)
-        if (row.redirect !== '') {
-          child.redirect = row.redirect
-        }
+        const child = typeof strucFun === 'function' ? formatDateForRouter(row) : row
         if (node.children) {
           node.children.push(child)
         } else {
@@ -111,10 +106,11 @@ function j2arr(obj, key) {
   return ret
 }
 
-const whiteList = ['/login', '/auth-redirect']// no redirect whitelist
-const whiteRoute = ['Dashboard', 'Page401', 'Login', '401', '404']
+const whiteList = ['/login', '/auth-redirect', '/Dashboard', '/Page401', '/Login', '/401', '/404']// no redirect whitelist
+// const whiteRoute = []
 
 router.beforeEach((to, from, next) => {
+  console.log(to)
   NProgress.start() // start progress bar
   if (getToken()) { // determine if there has token
     /* has token*/
@@ -123,8 +119,9 @@ router.beforeEach((to, from, next) => {
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
       if (store.getters.permission_routerMaps.length !== 0) {
-        const permissionRouterMaps = j2arr(store.getters.permission_routerMaps, 'name')
-        if (permissionRouterMaps.indexOf(to.name) < 0) {
+        const permissionRouterMaps = j2arr(store.getters.permission_routerMaps, 'path')
+        const toPath = typeof to.path === 'string' ? to.path.replace('/redirect', '') : ''
+        if (permissionRouterMaps.indexOf(toPath) < 0) {
           // 没有权限跳转401
           if (process.env.DEBUGGER) {
             console.log('没有权限, 调试模式可以访问')
@@ -137,8 +134,8 @@ router.beforeEach((to, from, next) => {
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
           // const { role } = res.data // note: roles must be a array! such as: ['editor','develop']
           let { routerMaps } = res.data
-          const routerFix = convert(routerMaps)
-          routerMaps = whiteRoute.concat(routerMaps)
+          const routerFix = convert(routerMaps, formatDateForRouter)
+          routerMaps = whiteList.concat(routerMaps)
           store.dispatch('GenerateRoutes', { routerMaps, routerFix }).then(() => { // 根据roles权限生成可访问的路由表
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
