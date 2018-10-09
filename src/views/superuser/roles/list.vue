@@ -17,9 +17,9 @@
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Permission">
+      <el-table-column align="center" label="Permissions">
         <template slot-scope="scope">
-          <span>{{ scope.row.permission }}</span>
+          {{ scope.row.permissions }}
         </template>
       </el-table-column>
       <el-table-column width="180px" align="center" label="Created Date">
@@ -35,8 +35,8 @@
 
       <el-table-column align="center" label="Actions">
         <template slot-scope="scope">
-          <el-button v-waves type="primary" size="mini">{{ $t('table.edit') }}</el-button>
-          <el-button v-waves :disabled="scope.row.id === 1" type="danger" size="mini" @click="removeData(scope.row)">{{ $t('table.delete') }}</el-button>
+          <el-button v-waves type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+          <el-button v-waves :disabled="scope.row.id === 1" type="danger" size="mini" @click="handleRemove(scope.row)">{{ $t('table.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -59,7 +59,7 @@
           <el-input v-model="temp.name"/>
         </el-form-item>
         <el-form-item label="权限" prop="permissions">
-          <el-checkbox :indeterminate="temp.isIndeterminate" v-model="temp.checkAll" @change="handleCheckAllPermissionChange">全选</el-checkbox>
+          <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllPermissionChange">全选</el-checkbox>
           <div style="margin: 15px 0;" />
           <el-checkbox-group v-model="temp.permissions" @change="handleCheckedPermissionChange">
             <el-checkbox v-for="item in permissionList" :label="item.code" :key="item.code" :value="item.code" border>{{ item.name }}</el-checkbox>
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { index, create, remove } from '@/api/roles'
+import { index, create, update, remove } from '@/api/roles'
 import { index as permissionIndex } from '@/api/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import { j2arr } from '@/utils/index'
@@ -97,8 +97,8 @@ export default {
   },
   data() {
     return {
-      list: null,
-      permissionList: null,
+      list: [],
+      permissionList: [],
       total: 0,
       listLoading: false,
       listQuery: {
@@ -118,10 +118,10 @@ export default {
       temp: {
         id: undefined,
         name: '',
-        permissions: [],
-        checkAll: false,
-        isIndeterminate: false
-      }
+        permissions: []
+      },
+      checkAll: false,
+      isIndeterminate: false
     }
   },
   created() {
@@ -161,8 +161,6 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          // this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          // this.temp.author = 'vue-element-admin'
           const { name } = this.temp
           let { permissions } = this.temp
           permissions = permissions.join(',')
@@ -178,7 +176,38 @@ export default {
         }
       })
     },
-    removeData(row) {
+    handleUpdate(row) {
+      this.resetTemp()
+      this.temp = Object.assign({}, row)
+      this.temp.permissions = this.temp.permissions.split(',')
+      this.temp.checkAll = false
+      console.log(this.temp)
+      this.handleCheckedPermissionChange(this.temp.permissions)
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const { id, name } = this.temp
+          let { permissions } = this.temp
+          permissions = permissions.join(',')
+          update({ id, name, permissions }).then(() => {
+            this.getList()
+            this.dialogFormVisible = false
+            this.$message({
+              title: '成功',
+              message: '更新成功',
+              type: 'success'
+            })
+          })
+        }
+      })
+    },
+    handleRemove(row) {
       const h = this.$createElement
       this.$confirm(h('p', null, [
         h('span', null, '确定删除 '),
@@ -214,17 +243,17 @@ export default {
     },
     handleCheckedPermissionChange(value) {
       const checkedCount = value.length
-      this.temp.checkAll = checkedCount === this.permissionList.length
-      this.temp.isIndeterminate = checkedCount > 0 && checkedCount < this.permissionList.length
+      this.checkAll = checkedCount === this.permissionList.length
+      this.isIndeterminate = checkedCount > 0 && checkedCount < this.permissionList.length
     },
     resetTemp() {
       this.temp = {
         id: undefined,
         name: '',
-        permissions: [],
-        checkAll: false,
-        isIndeterminate: false
+        permissions: []
       }
+      this.checkAll = false
+      this.isIndeterminate = false
     }
   }
 }
