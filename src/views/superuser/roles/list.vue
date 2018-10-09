@@ -103,7 +103,7 @@ export default {
       listLoading: false,
       listQuery: {
         page: 1,
-        page_size: 50
+        page_size: 10
       },
       dialogFormVisible: false,
       textMap: {
@@ -180,8 +180,6 @@ export default {
       this.resetTemp()
       this.temp = Object.assign({}, row)
       this.temp.permissions = this.temp.permissions.split(',')
-      this.temp.checkAll = false
-      console.log(this.temp)
       this.handleCheckedPermissionChange(this.temp.permissions)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
