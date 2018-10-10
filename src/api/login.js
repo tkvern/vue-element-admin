@@ -15,7 +15,7 @@ export function loginByUsername(username, password) {
     pwd: password
   }
   return request({
-    url: '/user/login',
+    url: '/auth/login',
     method: 'post',
     data
   })
@@ -29,20 +29,20 @@ export function loginByUsername(username, password) {
  */
 export function logout() {
   return request({
-    url: '/login/logout',
+    url: '/auth/logout',
     method: 'post'
   })
 }
 
 /**
- * 获取用户信息
+ * 获取用户信息以及菜单信息
  * @author tkvern <tkvern@qq.com>
  * @exports api/login/getUserInfo
  * @returns {Promise} - 返回request对象
  */
 export function getUserInfo() {
   return request({
-    url: '/user/info',
+    url: '/auth/info',
     method: 'get'
   })
 }

@@ -133,7 +133,8 @@ router.beforeEach((to, from, next) => {
       if (!store.getters.isLogin) { // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
           // const { role } = res.data // note: roles must be a array! such as: ['editor','develop']
-          let { routerMaps } = res.data
+          const { menu } = res.data
+          let routerMaps = menu || []
           const routerFix = convert(routerMaps, formatDateForRouter)
           routerMaps = whiteList.concat(routerMaps)
           store.dispatch('GenerateRoutes', { routerMaps, routerFix }).then(() => { // 根据roles权限生成可访问的路由表
