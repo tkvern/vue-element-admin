@@ -332,3 +332,51 @@ export function j2arr(obj, key) {
   })
   return ret
 }
+
+/**
+ * list转tree
+ * @author tkvern
+ * @param {Array} rows - 数组.
+ * @param {function} strucFun - 需要过滤的结构方法,传递单个元素后返回object即可.
+ * @returns {Array} - 返回菜单tree
+ */
+export function convert(rows, strucFun) {
+  function exists(rows, parentId) {
+    for (let i = 0; i < rows.length; i++) {
+      if (rows[i].id === parentId) return true
+    }
+    return false
+  }
+
+  var nodes = []
+  // get the top level nodes
+  for (let i = 0; i < rows.length; i++) {
+    var row = rows[i]
+    if (!exists(rows, row.parentId)) {
+      const data = typeof strucFun === 'function' ? strucFun(row) : row
+      nodes.push(data)
+    }
+  }
+
+  var toDo = []
+  for (let i = 0; i < nodes.length; i++) {
+    toDo.push(nodes[i])
+  }
+  while (toDo.length) {
+    const node = toDo.shift()	// the parent node
+    // get the children nodes
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i]
+      if (row.parentId === node.id) {
+        const child = typeof strucFun === 'function' ? strucFun(row) : row
+        if (node.children) {
+          node.children.push(child)
+        } else {
+          node.children = [child]
+        }
+        toDo.push(child)
+      }
+    }
+  }
+  return nodes
+}

@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 import { getToken } from '@/utils/auth' // getToken from cookie
-import { j2arr } from '@/utils/index'
+import { j2arr, convert } from '@/utils/index'
 // import Layout from '@/views/layout/Layout'
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
@@ -39,76 +39,8 @@ function formatDateForRouter(row) {
   }
 }
 
-/**
- * 服务端权限菜单list转tree
- * @author tkvern
- * @param {Array} rows - 权限菜单数组.
- * @param {function} strucFun - 需要过滤的结构方法,传递单个元素后返回object即可.
- * @returns {Array} - 返回菜单tree
- */
-function convert(rows, strucFun) {
-  function exists(rows, parentId) {
-    for (let i = 0; i < rows.length; i++) {
-      if (rows[i].id === parentId) return true
-    }
-    return false
-  }
-
-  var nodes = []
-  // get the top level nodes
-  for (let i = 0; i < rows.length; i++) {
-    var row = rows[i]
-    if (!exists(rows, row.parentId)) {
-      const data = typeof strucFun === 'function' ? formatDateForRouter(row) : row
-      nodes.push(data)
-    }
-  }
-
-  var toDo = []
-  for (let i = 0; i < nodes.length; i++) {
-    toDo.push(nodes[i])
-  }
-  while (toDo.length) {
-    const node = toDo.shift()	// the parent node
-    // get the children nodes
-    for (let i = 0; i < rows.length; i++) {
-      const row = rows[i]
-      if (row.parentId === node.id) {
-        const child = typeof strucFun === 'function' ? formatDateForRouter(row) : row
-        if (node.children) {
-          node.children.push(child)
-        } else {
-          node.children = [child]
-        }
-        toDo.push(child)
-      }
-    }
-  }
-  return nodes
-}
-
-/**
- * Object数组相同字段的元素,合并成一个数组
- * @author tkvern
- * @param {Array} obj - 数组.
- * @param {String} key - 需要合并的字段
- * @returns {Array} - 返回合并后数组
- */
-// function j2arr(obj, key) {
-//   obj = obj || []
-//   const ret = []
-//   obj.forEach(item => {
-//     if (item.hasOwnProperty(key)) {
-//       ret.push(item[key])
-//     } else {
-//       ret.push(item)
-//     }
-//   })
-//   return ret
-// }
-
-const whiteList = ['/login', '/auth-redirect', '/Dashboard', '/Page401', '/Login', '/401', '/404']// no redirect whitelist
-// const whiteRoute = []
+const whiteList = ['/login', '/auth-redirect']// no redirect whitelist
+const whiteRoute = ['/Dashboard', '/Page401', '/Login', '/401', '/404']
 
 router.beforeEach((to, from, next) => {
   console.log(to)
@@ -137,7 +69,7 @@ router.beforeEach((to, from, next) => {
           const { menu } = res.data
           let routerMaps = menu || []
           const routerFix = convert(routerMaps, formatDateForRouter)
-          routerMaps = whiteList.concat(routerMaps)
+          routerMaps = whiteRoute.concat(routerMaps)
           store.dispatch('GenerateRoutes', { routerMaps, routerFix }).then(() => { // 根据roles权限生成可访问的路由表
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
