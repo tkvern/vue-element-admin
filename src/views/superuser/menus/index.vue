@@ -23,47 +23,42 @@
           <span>{{ scope.row.pid }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Sort" width="80">
+      <el-table-column align="left" label="Permission">
         <template slot-scope="scope">
-          <span>{{ scope.row.sort }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="Permission">
-        <template slot-scope="scope">
-          <el-tag v-if="Object.keys(scope.row.permission).length !== 0" type="info" size="mini" class="board-item" style="margin-left: 5px;">
+          <el-tag :type="scope.row.permission.code !== '0' ? '': 'info' " size="mini" class="board-item" style="margin-left: 5px;">
             {{ scope.row.permission.name }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Name">
+      <el-table-column align="left" label="Name">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Title">
+      <el-table-column align="left" label="Title">
         <template slot-scope="scope">
           {{ scope.row.extend.meta.title }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Icon">
+      <el-table-column align="left" label="Path">
         <template slot-scope="scope">
-          {{ scope.row.extend.meta.icon }}
-          <svg-icon :icon-class="scope.row.extend.meta.icon" class-name="international-icon" />
+          <span style="color: #409eff">{{ scope.row.extend.path }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Hidden">
+      <el-table-column align="left" label="Icon">
+        <template slot-scope="scope">
+          <svg-icon :icon-class="scope.row.extend.meta.icon" class-name="international-icon" />
+          <span style="padding-left: 5px;">{{ scope.row.extend.meta.icon }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="Hidden" width="80">
         <template slot-scope="scope">
           <el-tag :type="scope.row.extend.hidden?'success':'info'" size="mini">{{ scope.row.extend.hidden }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="AlwaysShow">
+      <el-table-column align="center" label="AlwaysShow" width="120">
         <template slot-scope="scope">
           <el-tag :type="scope.row.extend.alwaysShow?'success':'info'" size="mini">{{ scope.row.extend.alwaysShow }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column width="180px" align="center" label="Created Date">
-        <template slot-scope="scope">
-          <span>{{ scope.row.c_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column width="180px" align="center" label="Updated Date">
@@ -93,36 +88,40 @@
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="768px">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="right" label-width="100px">
-        <el-form-item label="父级菜单ID" prop="pid" style="width: 420px;">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="right" label-width="140px">
+        <el-form-item label="父级菜单(pid)" prop="pid" style="width: 420px;">
           <el-input v-model.number="temp.pid" placeholder="默认0, 表示根菜单" />
         </el-form-item>
-        <el-form-item label="序号" prop="sort" style="width: 420px;">
+        <el-form-item label="序号(sort)" prop="sort" style="width: 420px;">
           <el-input v-model.number="temp.sort" placeholder="默认0, 数值越大越靠前" />
         </el-form-item>
-        <el-form-item :label="$t('table.name')" prop="name" style="width: 420px;">
+        <el-form-item label="名称(name)" prop="name" style="width: 420px;">
           <el-input v-model="temp.name" placeholder="路由标识(必须英文, 与前端定义一致)" />
         </el-form-item>
-        <el-form-item :label="$t('table.title')" prop="title" style="width: 420px;">
+        <el-form-item label="路径(path)" prop="path" style="width: 420px;">
+          <el-input v-model="temp.path" placeholder="路径(必须英文, 与前端定义一致)" />
+        </el-form-item>
+        <el-form-item label="标题(title)" prop="title" style="width: 420px;">
           <el-input v-model="temp.title" placeholder="显示文字, 可写中文, 可配置多语言key" />
         </el-form-item>
-        <el-form-item label="图标" prop="icon" style="width: 420px;">
+        <el-form-item label="图标(icon)" prop="icon" style="width: 420px;">
           <el-input v-model="temp.icon" placeholder="图标, 对应前端svg图标资源, 例如: example" />
         </el-form-item>
-        <el-form-item label="是否隐藏" prop="hidden" style="width: 420px;">
+        <el-form-item label="是否隐藏(hidden)" prop="hidden" style="width: 420px;">
           <el-switch
             v-model="temp.hidden"
             active-text="是"
             inactive-text="否" />
         </el-form-item>
-        <el-form-item label="常驻菜单" prop="alwaysShow" style="width: 420px;">
+        <el-form-item label="常驻菜单(alwaysShow)" prop="alwaysShow" style="width: 420px;">
           <el-switch
             v-model="temp.alwaysShow"
             active-text="是"
             inactive-text="否" />
         </el-form-item>
         <el-form-item label="可访问权限" prop="permission">
-          <el-radio v-for="item in permissionList" v-model="temp.permission.code" :key="item.code" :label="item.code" border>{{ item.name }}</el-radio>
+          <el-radio v-model="temp.permission.code" :key="0" label="0" border>无需权限</el-radio>
+          <el-radio v-for="item in permissionList" v-model="temp.permission.code" :key="item.code" :label="item.code" border style="margin-bottom: 10px;">{{ item.name }}</el-radio>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -189,6 +188,11 @@ export default {
           required: true,
           message: 'title is 必填',
           trigger: 'blur'
+        }],
+        path: [{
+          required: true,
+          message: 'path is 必填',
+          trigger: 'blur'
         }]
       },
       statusOptions: ['published', 'draft', 'deleted'],
@@ -197,8 +201,9 @@ export default {
         pid: null,
         name: '',
         permission: {
-          code: 0
+          code: '0'
         },
+        path: null,
         sort: null,
         title: '',
         hidden: false,
@@ -217,6 +222,7 @@ export default {
       index(this.listQuery).then(response => {
         this.list = response.data.map(item => {
           item.extend = JSON.parse(item.extend)
+          item.permission = Object.keys(item.permission).length !== 0 ? item.permission : { code: '0', name: '无需权限' }
           return item
         })
         // this.total = response.data.total
@@ -251,10 +257,11 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          const { pid, name, sort, title, icon, hidden, alwaysShow, permission } = this.temp
+          const { pid, name, sort, path, title, icon, hidden, alwaysShow, permission } = this.temp
           const extend = {
             hidden,
             alwaysShow,
+            path,
             meta: {
               title,
               icon
@@ -285,7 +292,8 @@ export default {
         title: row.extend.meta.title,
         icon: row.extend.meta.icon,
         hidden: row.extend.hidden,
-        alwaysShow: row.extend.alwaysShow
+        alwaysShow: row.extend.alwaysShow,
+        path: row.extend.path
       }, row)
       this.temp.id = this.temp.id.toString()
       this.dialogStatus = 'update'
@@ -297,10 +305,11 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          const { id, pid, name, sort, title, icon, hidden, alwaysShow, permission } = this.temp
+          const { id, pid, name, sort, path, title, icon, hidden, alwaysShow, permission } = this.temp
           const extend = {
             hidden,
             alwaysShow,
+            path,
             meta: {
               title,
               icon
@@ -371,8 +380,9 @@ export default {
         pid: null,
         name: '',
         permission: {
-          code: 0
+          code: '0'
         },
+        path: null,
         sort: null,
         hidden: false,
         alwaysShow: true,

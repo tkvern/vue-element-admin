@@ -25,7 +25,7 @@
       </el-table-column>
       <el-table-column align="left" label="Permissions">
         <template slot-scope="scope">
-          <el-tag v-for="item in scope.row.permissions" :key="item.code" type="info" size="mini" class="board-item" style="margin-left: 5px;">
+          <el-tag v-for="item in scope.row.permissions" :key="item.code" size="mini" class="board-item" style="margin-left: 5px;">
             {{ item.name }}
           </el-tag>
         </template>
