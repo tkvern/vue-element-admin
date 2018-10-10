@@ -12,10 +12,15 @@
       <el-button v-waves class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
     </div>
 
-    <el-table v-loading.body="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
+    <el-table v-loading.body="listLoading" :data="list" border fit highlight-current-row style="width: 100%;">
       <el-table-column align="center" label="ID" width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="PID" width="80">
+        <template slot-scope="scope">
+          <span>{{ scope.row.pid }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="Name">
@@ -23,9 +28,30 @@
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Permissions">
+      <el-table-column align="center" label="Permission">
         <template slot-scope="scope">
-          {{ scope.row.permissions }}
+          {{ scope.row.permission }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="Title">
+        <template slot-scope="scope">
+          {{ scope.row.extend.meta.title }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="Icon">
+        <template slot-scope="scope">
+          {{ scope.row.extend.meta.icon }}
+          <svg-icon :icon-class="scope.row.extend.meta.icon" class-name="international-icon" />
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="Hidden">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.extend.hidden?'success':'info'" size="mini">{{ scope.row.extend.hidden }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="AlwaysShow">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.extend.alwaysShow?'success':'info'" size="mini">{{ scope.row.extend.alwaysShow }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column width="180px" align="center" label="Created Date">
@@ -42,7 +68,7 @@
       <el-table-column align="center" label="Actions">
         <template slot-scope="scope">
           <el-button v-waves type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-          <el-button v-waves :disabled="scope.row.id === 1" type="danger" size="mini" @click="handleRemove(scope.row)">{{ $t('table.delete') }}</el-button>
+          <el-button v-waves type="danger" size="mini" @click="handleRemove(scope.row)">{{ $t('table.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -59,17 +85,37 @@
         @current-change="handleCurrentChange" />
     </div>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="45%">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="right" label-width="70px">
-        <el-form-item :label="$t('table.name')" prop="name" style="width: 80%;">
-          <el-input v-model="temp.name"/>
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="768px">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="right" label-width="100px">
+        <el-form-item label="父级菜单ID" prop="pid" style="width: 420px;">
+          <el-input v-model.number="temp.pid" placeholder="默认0, 表示根菜单" />
         </el-form-item>
-        <el-form-item label="权限" prop="permissions">
-          <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllPermissionChange">全选</el-checkbox>
-          <div style="margin: 15px 0;" />
-          <el-checkbox-group v-model="temp.permissions" @change="handleCheckedPermissionChange">
-            <el-checkbox v-for="item in permissionList" :label="item.code" :key="item.code" :value="item.code" border>{{ item.name }}</el-checkbox>
-          </el-checkbox-group>
+        <el-form-item label="序号" prop="sort" style="width: 420px;">
+          <el-input v-model.number="temp.sort" placeholder="默认0, 数值越大越靠前" />
+        </el-form-item>
+        <el-form-item :label="$t('table.name')" prop="name" style="width: 420px;">
+          <el-input v-model="temp.name" placeholder="路由标识(必须英文, 与前端定义一致)" />
+        </el-form-item>
+        <el-form-item :label="$t('table.title')" prop="title" style="width: 420px;">
+          <el-input v-model="temp.title" placeholder="显示文字, 可写中文, 可配置多语言key" />
+        </el-form-item>
+        <el-form-item label="图标" prop="icon" style="width: 420px;">
+          <el-input v-model="temp.icon" placeholder="图标, 对应前端svg图标资源, 例如: example" />
+        </el-form-item>
+        <el-form-item label="是否隐藏" prop="hidden" style="width: 420px;">
+          <el-switch
+            v-model="temp.hidden"
+            active-text="是"
+            inactive-text="否" />
+        </el-form-item>
+        <el-form-item label="常驻菜单" prop="alwaysShow" style="width: 420px;">
+          <el-switch
+            v-model="temp.alwaysShow"
+            active-text="是"
+            inactive-text="否" />
+        </el-form-item>
+        <el-form-item label="可访问权限" prop="permission">
+          <el-radio v-for="item in permissionList" v-model="temp.permission" :key="item.code" :label="item.code" border>{{ item.name }}</el-radio>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -109,16 +155,47 @@ export default {
       },
       dialogStatus: '',
       rules: {
-        name: [{ required: true, message: 'name is required', trigger: 'blur' }]
+        pid: [{
+          required: true,
+          message: 'pid is 必填',
+          trigger: 'blur'
+        }, {
+          type: 'number',
+          message: 'pid is 必须为数字',
+          trigger: ['blur', 'change']
+        }],
+        sort: [{
+          required: true,
+          message: 'sort is 必填',
+          trigger: 'blur'
+        }, {
+          type: 'number',
+          message: 'sort is 必须为数字',
+          trigger: ['blur', 'change']
+        }],
+        name: [{
+          required: true,
+          message: 'name is 必填',
+          trigger: 'blur'
+        }],
+        title: [{
+          required: true,
+          message: 'title is 必填',
+          trigger: 'blur'
+        }]
       },
       statusOptions: ['published', 'draft', 'deleted'],
       temp: {
         id: undefined,
+        pid: null,
         name: '',
-        permissions: []
-      },
-      checkAll: false,
-      isIndeterminate: false
+        permission: 0,
+        sort: null,
+        title: '',
+        hidden: false,
+        alwaysShow: true,
+        icon: ''
+      }
     }
   },
   created() {
@@ -129,8 +206,11 @@ export default {
     getList() {
       this.listLoading = true
       index(this.listQuery).then(response => {
-        this.list = response.data.list
-        this.total = response.data.total
+        this.list = response.data.map(item => {
+          item.extend = JSON.parse(item.extend)
+          return item
+        })
+        // this.total = response.data.total
         this.listLoading = false
       })
     },
@@ -162,10 +242,22 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          const { name } = this.temp
-          let { permissions } = this.temp
-          permissions = permissions.join(',')
-          create({ name, permissions }).then(response => {
+          const { pid, name, sort, title, icon, hidden, alwaysShow, permission } = this.temp
+          const extend = {
+            hidden,
+            alwaysShow,
+            meta: {
+              title,
+              icon
+            }
+          }
+          create({
+            name,
+            pid,
+            permission: parseInt(permission),
+            sort,
+            extend: JSON.stringify(extend)
+          }).then(response => {
             this.getList()
             this.dialogFormVisible = false
             this.$message({
@@ -248,11 +340,15 @@ export default {
     resetTemp() {
       this.temp = {
         id: undefined,
+        pid: null,
         name: '',
-        permissions: []
+        permissions: [],
+        sort: null,
+        hidden: false,
+        alwaysShow: true,
+        title: '',
+        icon: ''
       }
-      this.checkAll = false
-      this.isIndeterminate = false
     }
   }
 }
