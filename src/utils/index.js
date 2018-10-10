@@ -341,9 +341,9 @@ export function j2arr(obj, key) {
  * @returns {Array} - 返回菜单tree
  */
 export function convert(rows, strucFun) {
-  function exists(rows, parentId) {
+  function exists(rows, pid) {
     for (let i = 0; i < rows.length; i++) {
-      if (rows[i].id === parentId) return true
+      if (rows[i].id === pid) return true
     }
     return false
   }
@@ -352,7 +352,7 @@ export function convert(rows, strucFun) {
   // get the top level nodes
   for (let i = 0; i < rows.length; i++) {
     var row = rows[i]
-    if (!exists(rows, row.parentId)) {
+    if (!exists(rows, row.pid)) {
       const data = typeof strucFun === 'function' ? strucFun(row) : row
       nodes.push(data)
     }
@@ -367,7 +367,7 @@ export function convert(rows, strucFun) {
     // get the children nodes
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i]
-      if (row.parentId === node.id) {
+      if (row.pid === node.id) {
         const child = typeof strucFun === 'function' ? strucFun(row) : row
         if (node.children) {
           node.children.push(child)
