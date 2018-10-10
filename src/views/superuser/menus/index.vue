@@ -23,14 +23,21 @@
           <span>{{ scope.row.pid }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Name">
+      <el-table-column align="center" label="Sort" width="80">
         <template slot-scope="scope">
-          <span>{{ scope.row.name }}</span>
+          <span>{{ scope.row.sort }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="Permission">
         <template slot-scope="scope">
-          {{ scope.row.permission }}
+          <el-tag v-if="Object.keys(scope.row.permission).length !== 0" type="info" size="mini" class="board-item" style="margin-left: 5px;">
+            {{ scope.row.permission.name }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="Name">
+        <template slot-scope="scope">
+          <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="Title">
@@ -76,7 +83,7 @@
     <div class="pagination-container">
       <el-pagination
         :current-page="listQuery.page"
-        :page-sizes="[10,20,30,50]"
+        :page-sizes="[10,20,30,50,100]"
         :page-size="listQuery.page_size"
         :total="total"
         background
@@ -115,7 +122,7 @@
             inactive-text="否" />
         </el-form-item>
         <el-form-item label="可访问权限" prop="permission">
-          <el-radio v-for="item in permissionList" v-model="temp.permission" :key="item.code" :label="item.code" border>{{ item.name }}</el-radio>
+          <el-radio v-for="item in permissionList" v-model="temp.permission.code" :key="item.code" :label="item.code" border>{{ item.name }}</el-radio>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -145,7 +152,7 @@ export default {
       listLoading: false,
       listQuery: {
         page: 1,
-        page_size: 10,
+        page_size: 100,
         name: null
       },
       dialogFormVisible: false,
@@ -189,7 +196,9 @@ export default {
         id: undefined,
         pid: null,
         name: '',
-        permission: 0,
+        permission: {
+          code: 0
+        },
         sort: null,
         title: '',
         hidden: false,
@@ -251,13 +260,14 @@ export default {
               icon
             }
           }
-          create({
+          const data = {
             name,
             pid,
-            permission: parseInt(permission),
+            permission: parseInt(permission.code),
             sort,
             extend: JSON.stringify(extend)
-          }).then(response => {
+          }
+          create(data).then(response => {
             this.getList()
             this.dialogFormVisible = false
             this.$message({
@@ -271,9 +281,13 @@ export default {
     },
     handleUpdate(row) {
       this.resetTemp()
-      this.temp = Object.assign({}, row)
-      this.temp.permissions = this.temp.permissions.split(',')
-      this.handleCheckedPermissionChange(this.temp.permissions)
+      this.temp = Object.assign({
+        title: row.extend.meta.title,
+        icon: row.extend.meta.icon,
+        hidden: row.extend.hidden,
+        alwaysShow: row.extend.alwaysShow
+      }, row)
+      this.temp.id = this.temp.id.toString()
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -283,10 +297,24 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          const { id, name } = this.temp
-          let { permissions } = this.temp
-          permissions = permissions.join(',')
-          update({ id, name, permissions }).then(() => {
+          const { id, pid, name, sort, title, icon, hidden, alwaysShow, permission } = this.temp
+          const extend = {
+            hidden,
+            alwaysShow,
+            meta: {
+              title,
+              icon
+            }
+          }
+          const data = {
+            id,
+            name,
+            pid,
+            permission: parseInt(permission.code),
+            sort,
+            extend: JSON.stringify(extend)
+          }
+          update(data).then(() => {
             this.getList()
             this.dialogFormVisible = false
             this.$message({
@@ -342,7 +370,9 @@ export default {
         id: undefined,
         pid: null,
         name: '',
-        permissions: [],
+        permission: {
+          code: 0
+        },
         sort: null,
         hidden: false,
         alwaysShow: true,
