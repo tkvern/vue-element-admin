@@ -15,10 +15,9 @@ export function create(data) {
     data
   })
 }
-
 export function update(data) {
   return request({
-    url: '/roles/update',
+    url: `/roles/update/${data.id}`,
     method: 'post',
     data
   })

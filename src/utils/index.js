@@ -314,7 +314,7 @@ export function uniqueArr(arr) {
 }
 
 /**
- * Object数组相同字段的元素,合并成一个数组
+ * Object数组相同字段的元素,合并成一个数组，如果key不存在则返回原有对象
  * @author tkvern
  * @param {Array} obj - 数组.
  * @param {String} key - 需要合并的字段

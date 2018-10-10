@@ -23,9 +23,11 @@
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Permissions">
+      <el-table-column align="left" label="Permissions">
         <template slot-scope="scope">
-          {{ scope.row.permissions }}
+          <el-tag v-for="item in scope.row.permissions" :key="item.code" type="info" size="mini" class="board-item" style="margin-left: 5px;">
+            {{ item.name }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column width="180px" align="center" label="Created Date">
@@ -41,7 +43,7 @@
 
       <el-table-column align="center" label="Actions">
         <template slot-scope="scope">
-          <el-button v-waves type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+          <el-button v-waves :disabled="scope.row.id === 1" type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
           <el-button v-waves :disabled="scope.row.id === 1" type="danger" size="mini" @click="handleRemove(scope.row)">{{ $t('table.delete') }}</el-button>
         </template>
       </el-table-column>
@@ -180,7 +182,8 @@ export default {
     handleUpdate(row) {
       this.resetTemp()
       this.temp = Object.assign({}, row)
-      this.temp.permissions = this.temp.permissions.split(',')
+      this.temp.id = this.temp.id.toString()
+      this.temp.permissions = j2arr(this.temp.permissions, 'code')
       this.handleCheckedPermissionChange(this.temp.permissions)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true

@@ -4,6 +4,7 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 import { getToken } from '@/utils/auth' // getToken from cookie
+import { j2arr } from '@/utils/index'
 // import Layout from '@/views/layout/Layout'
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
@@ -93,18 +94,18 @@ function convert(rows, strucFun) {
  * @param {String} key - 需要合并的字段
  * @returns {Array} - 返回合并后数组
  */
-function j2arr(obj, key) {
-  obj = obj || []
-  const ret = []
-  obj.forEach(item => {
-    if (item.hasOwnProperty(key)) {
-      ret.push(item[key])
-    } else {
-      ret.push(item)
-    }
-  })
-  return ret
-}
+// function j2arr(obj, key) {
+//   obj = obj || []
+//   const ret = []
+//   obj.forEach(item => {
+//     if (item.hasOwnProperty(key)) {
+//       ret.push(item[key])
+//     } else {
+//       ret.push(item)
+//     }
+//   })
+//   return ret
+// }
 
 const whiteList = ['/login', '/auth-redirect', '/Dashboard', '/Page401', '/Login', '/401', '/404']// no redirect whitelist
 // const whiteRoute = []
