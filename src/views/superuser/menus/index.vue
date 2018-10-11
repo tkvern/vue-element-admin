@@ -136,7 +136,6 @@
 import { index, create, update, remove } from '@/api/menus'
 import { index as permissionIndex } from '@/api/permission'
 import waves from '@/directive/waves' // 水波纹指令
-import { j2arr } from '@/utils/index'
 
 export default {
   name: 'MenusIndex',
@@ -364,15 +363,6 @@ export default {
           message: '已取消删除'
         })
       })
-    },
-    handleCheckAllPermissionChange(val) {
-      this.temp.permissions = val ? j2arr(this.permissionList, 'code') : []
-      this.isIndeterminate = false
-    },
-    handleCheckedPermissionChange(value) {
-      const checkedCount = value.length
-      this.checkAll = checkedCount === this.permissionList.length
-      this.isIndeterminate = checkedCount > 0 && checkedCount < this.permissionList.length
     },
     resetTemp() {
       this.temp = {
