@@ -119,9 +119,9 @@
             active-text="是"
             inactive-text="否" />
         </el-form-item>
-        <el-form-item label="可访问权限" prop="permission">
+        <el-form-item label="可访问权限" prop="permission" class="float-left">
           <el-radio v-model="temp.permission.code" :key="0" label="0" border>无需权限</el-radio>
-          <el-radio v-for="item in permissionList" v-model="temp.permission.code" :key="item.code" :label="item.code" border style="margin-bottom: 10px;">{{ item.name }}</el-radio>
+          <el-radio v-for="item in permissionList" v-model="temp.permission.code" :key="item.code" :label="item.code" border>{{ item.name }}</el-radio>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -194,7 +194,6 @@ export default {
           trigger: 'blur'
         }]
       },
-      statusOptions: ['published', 'draft', 'deleted'],
       temp: {
         id: undefined,
         pid: null,
@@ -392,5 +391,10 @@ export default {
   position: absolute;
   right: 15px;
   top: 10px;
+}
+.float-left .el-radio {
+  margin-left: 0px !important;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 </style>

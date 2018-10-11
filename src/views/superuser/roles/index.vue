@@ -61,15 +61,15 @@
         @current-change="handleCurrentChange" />
     </div>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="45%">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="right" label-width="70px">
-        <el-form-item :label="$t('table.name')" prop="name" style="width: 80%;">
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="768px">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="right" label-width="140px">
+        <el-form-item :label="$t('table.name')" prop="name" style="width: 420px;">
           <el-input v-model="temp.name"/>
         </el-form-item>
         <el-form-item label="权限" prop="permissions">
           <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllPermissionChange">全选</el-checkbox>
           <div style="margin: 15px 0;" />
-          <el-checkbox-group v-model="temp.permissions" @change="handleCheckedPermissionChange">
+          <el-checkbox-group v-model="temp.permissions" class="float-left" @change="handleCheckedPermissionChange">
             <el-checkbox v-for="item in permissionList" :label="item.code" :key="item.code" :value="item.code" border>{{ item.name }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
@@ -113,7 +113,6 @@ export default {
       rules: {
         name: [{ required: true, message: 'name is required', trigger: 'blur' }]
       },
-      statusOptions: ['published', 'draft', 'deleted'],
       temp: {
         id: undefined,
         name: '',
@@ -269,5 +268,10 @@ export default {
   position: absolute;
   right: 15px;
   top: 10px;
+}
+.float-left .el-checkbox {
+  margin-left: 0px !important;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 </style>
