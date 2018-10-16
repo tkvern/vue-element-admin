@@ -40,7 +40,7 @@ function formatDateForRouter(row) {
 }
 
 const whiteList = ['/login', '/auth-redirect']// no redirect whitelist
-const whiteRoute = ['/dashboard', '/guide/index', '/401', '/404']
+const whiteRoute = ['/dashboard', '/guide/index', '/error-log/log', '/401', '/404']
 
 router.beforeEach((to, from, next) => {
   // console.log(to)
