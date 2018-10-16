@@ -40,10 +40,10 @@ function formatDateForRouter(row) {
 }
 
 const whiteList = ['/login', '/auth-redirect']// no redirect whitelist
-const whiteRoute = ['/dashboard', '/401', '/404']
+const whiteRoute = ['/dashboard', '/guide/index', '/401', '/404']
 
 router.beforeEach((to, from, next) => {
-  console.log(to)
+  // console.log(to)
   NProgress.start() // start progress bar
   if (getToken()) { // determine if there has token
     /* has token*/

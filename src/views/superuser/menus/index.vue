@@ -23,29 +23,29 @@
           <span>{{ scope.row.pid }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="left" label="Permission">
+      <el-table-column align="left" label="Permission" width="120">
         <template slot-scope="scope">
           <el-tag :type="scope.row.permission.code !== '0' ? '': 'info' " size="mini" class="board-item" style="margin-left: 5px;">
             {{ scope.row.permission.name }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="left" label="Name">
+      <el-table-column align="left" label="Name" width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="left" label="Title">
+      <el-table-column align="left" label="Title" width="180">
         <template slot-scope="scope">
           {{ scope.row.extend.meta.title }}
         </template>
       </el-table-column>
-      <el-table-column align="left" label="Path">
+      <el-table-column align="left" label="Path" width="220">
         <template slot-scope="scope">
           <span style="color: #409eff">{{ scope.row.extend.path }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="left" label="Icon">
+      <el-table-column align="left" label="Icon" width="120">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.extend.meta.icon" class-name="international-icon" />
           <span style="padding-left: 5px;">{{ scope.row.extend.meta.icon }}</span>
@@ -67,7 +67,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="Actions">
+      <el-table-column align="center" label="Actions" width="180">
         <template slot-scope="scope">
           <el-button v-waves type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
           <el-button v-waves type="danger" size="mini" @click="handleRemove(scope.row)">{{ $t('table.delete') }}</el-button>
