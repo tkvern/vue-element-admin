@@ -63,6 +63,9 @@
     "xlsx": "^0.11.16"
   },
   "devDependencies": {
+    "@vue/cli-plugin-unit-mocha": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "@vue/test-utils": "^1.0.0-beta.25",
     "autoprefixer": "8.5.0",
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.6",
@@ -74,6 +77,7 @@
     "babel-plugin-transform-vue-jsx": "3.7.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-2": "6.24.1",
+    "chai": "^4.2.0",
     "chalk": "2.4.1",
     "copy-webpack-plugin": "4.5.2",
     "cross-env": "5.2.0",

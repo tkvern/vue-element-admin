@@ -145,10 +145,10 @@ export default {
           font-size: 12px;
         }
       }
-      @media (max-width: 375px ) {
-        .avatar-wrapper {
-          display: none;
-        }
+    }
+    @media (max-width: 375px ) {
+      .avatar-container {
+        display: none;
       }
     }
   }
