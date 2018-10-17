@@ -146,6 +146,11 @@ export default {
         }
       }
     }
+    @media (width: 375px) {
+      .avatar-container {
+        display: none;
+      }
+    }
   }
 }
 </style>

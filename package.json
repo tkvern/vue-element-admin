@@ -8,8 +8,8 @@
     "dev": "cross-env BABEL_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "build:prod": "cross-env NODE_ENV=production env_config=prod node build/build.js",
     "build:sit": "cross-env NODE_ENV=production env_config=sit node build/build.js",
-    "lint": "eslint --ext .js,.vue src",
-    "test": "npm run lint",
+    "lint": "eslint --ext .js,.vue src build",
+    "test:unit": "vue-cli-service test:unit",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
     "build:sit-preview": "cross-env NODE_ENV=production env_config=sit npm_config_preview=true  npm_config_report=true node build/build.js"
   },
@@ -64,6 +64,9 @@
     "xlsx": "^0.11.16"
   },
   "devDependencies": {
+    "@vue/cli-plugin-unit-mocha": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "@vue/test-utils": "^1.0.0-beta.25",
     "autoprefixer": "8.5.0",
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.6",
@@ -75,6 +78,7 @@
     "babel-plugin-transform-vue-jsx": "3.7.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-2": "6.24.1",
+    "chai": "^4.2.0",
     "chalk": "2.4.1",
     "copy-webpack-plugin": "4.5.2",
     "cross-env": "5.2.0",
