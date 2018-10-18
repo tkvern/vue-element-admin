@@ -4,4 +4,5 @@ module.exports = {
   // BASE_API: '"http://127.0.0.1:5289"'
   BASE_API: '"https://api-sit"',
   DEBUGGER: true
+  BASE_API: '"http://127.0.0.1:5500"'
 }
