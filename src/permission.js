@@ -68,8 +68,17 @@ router.beforeEach((to, from, next) => {
           // const { role } = res.data // note: roles must be a array! such as: ['editor','develop']
           let { menu } = res.data
           menu = menu.map(item => {
-            item.extend = JSON.parse(item.extend)
-            item.path = item.extend.path
+            try {
+              item.extend = JSON.parse(item.extend)
+              item.path = item.extend.path
+            } catch (error) {
+              item.extend = {
+                meta: {
+                  title: '',
+                  icon: ''
+                }
+              }
+            }
             return item
           })
           let routerMaps = menu || []
