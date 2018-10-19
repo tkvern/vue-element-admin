@@ -220,6 +220,7 @@ export default {
       index(this.listQuery).then(response => {
         this.list = response.data.map(item => {
           item.extend = JSON.parse(item.extend)
+          item.extend.meta = item.extend.meta || { title: '', icon: '' }
           item.permission = Object.keys(item.permission).length !== 0 ? item.permission : { code: '0', name: '无需权限' }
           return item
         })
