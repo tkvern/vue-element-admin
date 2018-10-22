@@ -18,30 +18,30 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.name')" align="center">
+      <el-table-column align="center" label="Name">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.permissions')" align="center">
+      <el-table-column align="left" label="Permissions">
         <template slot-scope="scope">
           <el-tag v-for="item in scope.row.permissions" :key="item.code" size="mini" class="board-item" style="margin-left: 5px;">
             {{ item.name }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.created')" width="180px" align="center">
+      <el-table-column width="180px" align="center" label="Created Date">
         <template slot-scope="scope">
           <span>{{ scope.row.c_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.updated')" width="180px" align="center">
+      <el-table-column width="180px" align="center" label="Updated Date">
         <template slot-scope="scope">
           <span>{{ scope.row.m_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('table.actions')" align="center">
+      <el-table-column align="center" label="Actions">
         <template slot-scope="scope">
           <el-button v-waves :disabled="scope.row.id === 1" type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
           <el-button v-waves :disabled="scope.row.id === 1" type="danger" size="mini" @click="handleRemove(scope.row)">{{ $t('table.delete') }}</el-button>
