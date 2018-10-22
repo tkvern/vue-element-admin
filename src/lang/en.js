@@ -61,7 +61,11 @@ export default {
     theme: 'Theme',
     clipboardDemo: 'Clipboard',
     i18n: 'I18n',
-    externalLink: 'External Link'
+    externalLink: 'External Link',
+    roles: 'Roles',
+    menus: 'Menus',
+    users: 'Users',
+    superUser: 'SuperUser'
   },
   navbar: {
     logOut: 'Log Out',
@@ -127,7 +131,17 @@ export default {
     draft: 'Draft',
     delete: 'Delete',
     cancel: 'Cancel',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    roles: 'Roles',
+    permissions: 'Permissions',
+    nickname: 'Nickname',
+    created: 'Created',
+    updated: 'Updated',
+    avatar: 'Avatar',
+    path: 'Path',
+    icon: 'Icon',
+    alwaysShow: 'AlwaysShow',
+    hidden: 'Hidden'
   },
   errorLog: {
     tips: 'Please click the bug icon in the upper right corner',
