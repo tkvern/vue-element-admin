@@ -324,7 +324,7 @@ export function j2arr(obj, key) {
   obj = obj || []
   const ret = []
   obj.forEach(item => {
-    if (item.hasOwnProperty(key)) {
+    if (item && item.hasOwnProperty(key)) {
       ret.push(item[key])
     } else {
       ret.push(item)
