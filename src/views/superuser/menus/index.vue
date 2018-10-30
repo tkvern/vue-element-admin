@@ -10,6 +10,7 @@
       />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="fuzzySearch">{{ $t('table.search') }}</el-button>
       <el-button v-waves class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+      <span>Tip: 添加或修改菜单后，需要刷新页面</span>
     </div>
 
     <el-table v-loading.body="listLoading" :data="list" border fit highlight-current-row style="width: 100%;">

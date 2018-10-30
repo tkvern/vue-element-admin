@@ -10,8 +10,8 @@
       />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="fuzzySearch">{{ $t('table.search') }}</el-button>
       <el-button v-waves class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+      <span>Tip: 添加或修改角色后，请刷新缓存的选项卡</span>
     </div>
-
     <el-table v-loading.body="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="ID" width="80">
         <template slot-scope="scope">

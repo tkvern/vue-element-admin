@@ -12,7 +12,7 @@ import Layout from '@/views/layout/Layout'
 // import tableRouter from './modules/table'
 // import nestedRouter from './modules/nested'
 import superUserRouter from './modules/superuser'
-import sysChartsRouter from './modules/syscharts'
+// import sysChartsRouter from './modules/syscharts'
 
 /** note: Submenu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -168,7 +168,7 @@ export const asyncRouterMap = [
   // nestedRouter,
   // tableRouter,
   superUserRouter,
-  sysChartsRouter,
+  // sysChartsRouter,
   // {
   //   path: '/example',
   //   component: Layout,
