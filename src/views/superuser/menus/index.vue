@@ -23,51 +23,51 @@
           <span>{{ scope.row.pid }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.permissions')" align="center" width="120">
+      <el-table-column align="left" label="Permission" width="120">
         <template slot-scope="scope">
           <el-tag :type="scope.row.permission.code !== '0' ? '': 'info' " size="mini" class="board-item" style="margin-left: 5px;">
             {{ scope.row.permission.name }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.name')" align="center" width="180">
+      <el-table-column align="left" label="Name" width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.title')" align="center" width="180">
+      <el-table-column align="left" label="Title" width="180">
         <template slot-scope="scope">
           {{ scope.row.extend.meta.title }}
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.path')" align="center" width="220">
+      <el-table-column align="left" label="Path" width="220">
         <template slot-scope="scope">
           <span style="color: #409eff">{{ scope.row.extend.path }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.icon')" align="center" width="120">
+      <el-table-column align="left" label="Icon" width="120">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.extend.meta.icon" class-name="international-icon" />
           <span style="padding-left: 5px;">{{ scope.row.extend.meta.icon }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.hidden')" align="center" width="80">
+      <el-table-column align="center" label="Hidden" width="80">
         <template slot-scope="scope">
           <el-tag :type="scope.row.extend.hidden?'success':'info'" size="mini">{{ scope.row.extend.hidden }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.alwaysShow')" align="center" width="120">
+      <el-table-column align="center" label="AlwaysShow" width="120">
         <template slot-scope="scope">
           <el-tag :type="scope.row.extend.alwaysShow?'success':'info'" size="mini">{{ scope.row.extend.alwaysShow }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.updated')" width="180px" align="center">
+      <el-table-column width="180px" align="center" label="Updated Date">
         <template slot-scope="scope">
           <span>{{ scope.row.m_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('table.actions')" align="center" width="180">
+      <el-table-column align="center" label="Actions" width="180">
         <template slot-scope="scope">
           <el-button v-waves type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
           <el-button v-waves type="danger" size="mini" @click="handleRemove(scope.row)">{{ $t('table.delete') }}</el-button>
