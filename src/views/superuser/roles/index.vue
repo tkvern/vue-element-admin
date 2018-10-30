@@ -133,6 +133,8 @@ export default {
         this.list = response.data.list
         this.total = response.data.total
         this.listLoading = false
+      }).catch(() => {
+        this.listLoading = false
       })
     },
     fuzzySearch() {
