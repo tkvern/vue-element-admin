@@ -219,7 +219,16 @@ export default {
       this.listLoading = true
       index(this.listQuery).then(response => {
         this.list = response.data.map(item => {
-          item.extend = JSON.parse(item.extend)
+          try {
+            item.extend = JSON.parse(item.extend)
+          } catch (error) {
+            item.extend = {
+              meta: {
+                title: '',
+                icon: ''
+              }
+            }
+          }
           item.extend.meta = item.extend.meta || { title: '', icon: '' }
           item.permission = Object.keys(item.permission).length !== 0 ? item.permission : { code: '0', name: '无需权限' }
           return item
